@@ -1,0 +1,67 @@
+/*
+   CSS styling examples for the Vaadin app.
+
+   Visit https://vaadin.com/docs/styling/application-theme/ for more information.
+*/
+
+.navbar {
+  padding: 10px;
+  display: flex;
+}
+
+.navbar a {
+  color: darkslateblue;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+.centered-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.grid {
+  width: 80%;
+  margin-bottom: 20px;
+}
+
+.grid-filters {
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+
+.title {
+  width: 100%;
+  font-size: x-large;
+  font-weight: bold;
+  margin-bottom: 25px;
+}
+
+.textfields {
+  width: 80%;
+  gap: 10px;
+  justify-content: left;
+}
+
+.search{
+  width: 100%;
+  gap: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
+.buttons {
+  gap: 10px;
+  justify-content: left;
+  margin-top: 20px;
+}
