@@ -23,9 +23,28 @@ public class BiletMapper {
                 .build();
     }
 
-    public static List<BiletDTO> biletEntityListToDTOs(List<Bilet> gari){
-        return gari.stream()
+    public static List<BiletDTO> biletEntityListToDTOs(List<Bilet> bilete){
+        return bilete.stream()
                 .map(BiletMapper::biletEntityToDTO)
+                .toList();
+    }
+
+    public static Bilet biletDTOToEntity(BiletDTO biletDTO){
+        return Bilet.builder()
+                .id(biletDTO.id())
+                .dataCalatoriei(biletDTO.dataCalatoriei())
+                .garaDePlecare(GaraMapper.garaDTOtoEntity(biletDTO.garaDePlecare()))
+                .garaDeDestinatie(GaraMapper.garaDTOtoEntity(biletDTO.garaDeDestinatie()))
+                .oraDePlecare(biletDTO.oraDePlecare())
+                .oraDeSosire(biletDTO.oraDeSosire())
+                .vagon(VagonMapper.vagonDTOToEntity(biletDTO.vagon()))
+                .nrLoc(biletDTO.nrLoc())
+                .build();
+    }
+
+    public static List<Bilet> biletDTOListToEntities(List<BiletDTO> biletDTOs){
+        return biletDTOs.stream()
+                .map(BiletMapper::biletDTOToEntity)
                 .toList();
     }
 }

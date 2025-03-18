@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import ro.ps.proiect.presenter.gui_interfaces.I_GaraView;
 import ro.ps.proiect.presenter.presenter.GaraPresenter;
 import ro.ps.proiect.presenter.dto.GaraDTO;
-import ro.ps.proiect.view.MainLayout;
+import ro.ps.proiect.view.layout.MainLayout;
 
 import java.util.Optional;
 

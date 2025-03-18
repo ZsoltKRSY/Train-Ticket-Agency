@@ -2,6 +2,7 @@ package ro.ps.proiect.presenter.gui_interfaces;
 
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.select.Select;
+import com.vaadin.flow.server.StreamResource;
 import ro.ps.proiect.presenter.dto.*;
 
 import java.time.LocalDate;
@@ -37,5 +38,7 @@ public interface I_BiletView {
     GaraDTO getFilterGaraDeDestinatieSelect();
     void setFilterTrenSelect(Select<TrenDTO> filterTrenSelect);
     void setFilterGaraDeDestinatieSelect(Select<GaraDTO> filterGaraDeDestinatieSelect);
+    String getSalvareListaFormatSelect();
+    void salvareListaBilete(StreamResource streamResource, String format);
 
 }

@@ -1,11 +1,13 @@
 package ro.ps.proiect.view.view;
 
 import com.vaadin.flow.component.ClickEvent;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.dialog.Dialog;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.NativeLabel;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,12 +16,13 @@ import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.stereotype.Component;
 import ro.ps.proiect.presenter.dto.*;
 import ro.ps.proiect.presenter.gui_interfaces.I_BiletView;
 import ro.ps.proiect.presenter.presenter.BiletPresenter;
-import ro.ps.proiect.view.MainLayout;
+import ro.ps.proiect.view.layout.MainLayout;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -51,6 +54,10 @@ public class BiletView extends VerticalLayout implements I_BiletView {
     private final DatePicker filterDataCalatorieiDatePicker = new DatePicker("Filter by Travel Date");
     private Select<GaraDTO> filterGaraDeDestinatieSelect = new Select<>();
 
+    private final Select<String> salvareListaFormatSelect = new Select<>();
+    private final Button salvareListaButton;
+    private final Anchor salvareListaAnchor;
+
     public BiletView(BiletPresenter biletPresenter){
         this.biletPresenter = biletPresenter;
         biletPresenter.setI_biletView_and_init_gridView_and_selects(this);
@@ -71,6 +78,16 @@ public class BiletView extends VerticalLayout implements I_BiletView {
         updateBiletButton = new Button("Update", this::updateBilet);
         deleteBiletButton = new Button("Delete", this::deleteBilet);
 
+        salvareListaFormatSelect.setItems(".csv", ".doc");
+        salvareListaFormatSelect.setValue(".csv");
+        salvareListaAnchor = new Anchor();
+        salvareListaButton = new Button("Save", this::salvareListaBilete);
+        salvareListaAnchor.add(salvareListaButton);
+
+        filterTrenSelect.setEmptySelectionAllowed(true);
+        filterTrenSelect.setEmptySelectionCaption("None");
+        filterGaraDeDestinatieSelect.setEmptySelectionAllowed(true);
+        filterGaraDeDestinatieSelect.setEmptySelectionCaption("None");
         filterDataCalatorieiDatePicker.addValueChangeListener(event -> filterBilete());
         filterTrenSelect.addValueChangeListener(event -> filterBilete());
         filterGaraDeDestinatieSelect.addValueChangeListener(event -> filterBilete());
@@ -99,7 +116,8 @@ public class BiletView extends VerticalLayout implements I_BiletView {
         textFieldsLayout.addClassName("textfields");
         layout.add(textFieldsLayout);
 
-        HorizontalLayout buttonsLayout = new HorizontalLayout(addBiletButton, updateBiletButton, deleteBiletButton);
+        HorizontalLayout buttonsLayout = new HorizontalLayout(addBiletButton, updateBiletButton, deleteBiletButton,
+                salvareListaFormatSelect, salvareListaAnchor);
         buttonsLayout.addClassName("buttons");
         addBiletButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
         updateBiletButton.addThemeVariants(ButtonVariant.LUMO_SUCCESS);
@@ -139,6 +157,10 @@ public class BiletView extends VerticalLayout implements I_BiletView {
 
     private void filterBilete(){
         biletPresenter.filterBilete();
+    }
+
+    private void salvareListaBilete(ClickEvent clickEvent){
+        biletPresenter.salvareListaBilete();
     }
 
     @Override
@@ -299,6 +321,18 @@ public class BiletView extends VerticalLayout implements I_BiletView {
     public void setFilterGaraDeDestinatieSelect(Select<GaraDTO> filterGaraDeDestinatieSelect) {
         this.filterGaraDeDestinatieSelect = filterGaraDeDestinatieSelect;
         this.filterGaraDeDestinatieSelect.getDataProvider().refreshAll();
+    }
+
+    @Override
+    public String getSalvareListaFormatSelect(){
+        return salvareListaFormatSelect.getValue();
+    }
+
+    @Override
+    public void salvareListaBilete(StreamResource streamResource, String format) {
+        salvareListaAnchor.setHref(streamResource);
+        salvareListaAnchor.getElement().setAttribute("download", "bilete" + format);
+        UI.getCurrent().getPage().executeJs("setTimeout(() => $0.click(), 100)", salvareListaAnchor.getElement());
     }
 
 }

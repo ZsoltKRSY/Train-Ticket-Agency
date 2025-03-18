@@ -21,9 +21,8 @@ import ro.ps.proiect.presenter.gui_interfaces.I_OrarGaraView;
 import ro.ps.proiect.presenter.presenter.OrarGaraPresenter;
 import ro.ps.proiect.presenter.dto.GaraDTO;
 import ro.ps.proiect.presenter.dto.OrarGaraDTO;
-import ro.ps.proiect.view.MainLayout;
+import ro.ps.proiect.view.layout.MainLayout;
 
-import java.awt.*;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.Optional;

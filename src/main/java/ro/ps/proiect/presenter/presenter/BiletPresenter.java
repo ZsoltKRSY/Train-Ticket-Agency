@@ -13,10 +13,12 @@ import ro.ps.proiect.presenter.dto.mapper.BiletMapper;
 import ro.ps.proiect.presenter.dto.mapper.GaraMapper;
 import ro.ps.proiect.presenter.dto.mapper.TrenMapper;
 import ro.ps.proiect.presenter.dto.mapper.VagonMapper;
+import ro.ps.proiect.presenter.file_operation.BileteFileWriter;
 import ro.ps.proiect.presenter.gui_interfaces.I_BiletView;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -231,7 +233,6 @@ public class BiletPresenter {
 
     private void setTrenSelect(){
         List<TrenDTO> trenDTOs = TrenMapper.trenEntityListToDTOs(trenRepository.findAll());
-        //trenDTOs.addFirst(null);
         filterTrenSelect.setItems(trenDTOs);
     }
 
@@ -294,50 +295,42 @@ public class BiletPresenter {
     }
 
     public void filterBilete(){
-        
+        List<BiletDTO> biletDTOs = getBilete();
+        this.setBileteGrid(biletDTOs);
     }
 
-    public void filterByDataCalatoriei(){
+    private List<BiletDTO> getBilete(){
+        List<BiletDTO> biletDTOs = new ArrayList<>(BiletMapper.biletEntityListToDTOs(biletRepository.findAll()));
+
         LocalDate dataCalatoriei = i_biletView.getFilterDataCalatorieiDatePicker();
-
-        List<BiletDTO> biletDTOs;
-        if(dataCalatoriei == null){
-            biletDTOs = BiletMapper.biletEntityListToDTOs(biletRepository.findAll());
-        }
-        else{
-            biletDTOs = BiletMapper.biletEntityListToDTOs(biletRepository.findAllByDataCalatoriei(dataCalatoriei));
+        if(dataCalatoriei != null){
+            biletDTOs.removeIf(biletDTO -> !biletDTO.dataCalatoriei().equals(dataCalatoriei));
         }
 
-        this.setBileteGrid(biletDTOs);
+        TrenDTO trenDTO = i_biletView.getFilterTrenSelect();
+        if(trenDTO != null){
+            biletDTOs.removeIf(biletDTO -> !biletDTO.vagon().trenDTO().equals(trenDTO));
+        }
 
+        GaraDTO garaDeDestinatieDTO = i_biletView.getFilterGaraDeDestinatieSelect();
+        if(garaDeDestinatieDTO != null){
+            biletDTOs.removeIf(biletDTO -> !biletDTO.garaDeDestinatie().equals(garaDeDestinatieDTO));
+        }
+
+        return biletDTOs;
     }
 
-    public void filterByTren(){
-        Tren tren = TrenMapper.trenDTOToEntity(i_biletView.getFilterTrenSelect());
+    public void salvareListaBilete(){
+        String format = i_biletView.getSalvareListaFormatSelect();
+        switch(format){
+            case ".csv":
+                this.i_biletView.salvareListaBilete(BileteFileWriter.getCSVStream(BiletMapper.biletDTOListToEntities(this.getBilete())), format);
+                break;
+            case ".doc":
+                this.i_biletView.salvareListaBilete(BileteFileWriter.getDOCXStream(BiletMapper.biletDTOListToEntities(this.getBilete())), format);
+                break;
+         }
 
-        List<BiletDTO> biletDTOs;
-        if(tren == null){
-            biletDTOs = BiletMapper.biletEntityListToDTOs(biletRepository.findAll());
-        }
-        else{
-            biletDTOs = BiletMapper.biletEntityListToDTOs(biletRepository.findAllByVagonTren(tren));
-        }
-
-        this.setBileteGrid(biletDTOs);
-    }
-
-    public void filterByGaraDeDestinatie(){
-        Gara garaDeDestinatie = GaraMapper.garaDTOtoEntity(i_biletView.getFilterGaraDeDestinatieSelect());
-
-        List<BiletDTO> biletDTOs;
-        if(garaDeDestinatie == null){
-            biletDTOs = BiletMapper.biletEntityListToDTOs(biletRepository.findAll());
-        }
-        else{
-            biletDTOs = BiletMapper.biletEntityListToDTOs(biletRepository.findAllByGaraDeDestinatie(garaDeDestinatie));
-        }
-
-        this.setBileteGrid(biletDTOs);
     }
 
 }

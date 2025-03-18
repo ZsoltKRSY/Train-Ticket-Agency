@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 import ro.ps.proiect.presenter.gui_interfaces.I_VagonView;
 import ro.ps.proiect.presenter.presenter.VagonPresenter;
 import ro.ps.proiect.presenter.dto.VagonDTO;
-import ro.ps.proiect.view.MainLayout;
+import ro.ps.proiect.view.layout.MainLayout;
 
 import java.util.Optional;
 

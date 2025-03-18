@@ -9,10 +9,4 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface BiletRepository extends JpaRepository<Bilet, Long> {
-
-    List<Bilet> findAllByDataCalatoriei(LocalDate dataCalatoriei);
-
-    List<Bilet> findAllByGaraDeDestinatie(Gara garaDeDestinatie);
-
-    List<Bilet> findAllByVagonTren(Tren tren);
 }

@@ -1,4 +1,4 @@
-package ro.ps.proiect.view;
+package ro.ps.proiect.view.layout;
 
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
