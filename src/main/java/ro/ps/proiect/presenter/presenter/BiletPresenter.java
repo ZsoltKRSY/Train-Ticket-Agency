@@ -4,7 +4,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.select.Select;
 import org.springframework.stereotype.Component;
 import ro.ps.proiect.model.data_structures.Bilet;
-import ro.ps.proiect.model.data_structures.Gara;
 import ro.ps.proiect.model.data_structures.OrarGara;
 import ro.ps.proiect.model.data_structures.Tren;
 import ro.ps.proiect.model.repository.*;
