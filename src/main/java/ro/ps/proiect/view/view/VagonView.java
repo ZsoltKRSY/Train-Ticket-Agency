@@ -82,6 +82,7 @@ public class VagonView extends VerticalLayout implements I_VagonView, HasUrlPara
         this.add(layout);
     }
 
+    //event handling
     private void saveVagon(ClickEvent clickEvent){
         vagonPresenter.saveVagon();
     }
@@ -90,16 +91,12 @@ public class VagonView extends VerticalLayout implements I_VagonView, HasUrlPara
         vagonPresenter.deleteVagon();
     }
 
+    //interface methods
     @Override
     public void setParameter(BeforeEvent beforeEvent, String nrTren) {
-        if(nrTren == null){
-            this.setMessage("Error!", "There was an error getting the Number of the selected train!");
-        }
-        else{
-            this.nrTren = nrTren;
-            vagonPresenter.setI_vagonView_and_init_gridView(this, nrTren);
-            initGUI();
-        }
+        this.nrTren = nrTren;
+        vagonPresenter.setI_vagonView_and_init_gridView(this, nrTren);
+        initGUI();
     }
 
     @Override

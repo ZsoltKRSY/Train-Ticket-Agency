@@ -122,6 +122,7 @@ public class TrenView extends VerticalLayout implements I_TrenView {
         trenPresenter.redirectOrarGaraView();
     }
 
+    //interface methods
     @Override
     public Long getSelectedTrenId() {
         Optional<TrenDTO> trenDTO = trenuriGrid.getSelectedItems().stream().findFirst();

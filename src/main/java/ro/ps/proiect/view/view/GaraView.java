@@ -88,7 +88,7 @@ public class GaraView extends VerticalLayout implements I_GaraView {
         garaPresenter.deleteGara();
     }
 
-    //i_GaraView methods
+    //interface methods
     @Override
     public Long getSelectedGaraId() {
         Optional<GaraDTO> garaDTO = gariGrid.getSelectedItems().stream().findFirst();

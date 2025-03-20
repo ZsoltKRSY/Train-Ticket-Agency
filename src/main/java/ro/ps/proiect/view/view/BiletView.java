@@ -127,6 +127,7 @@ public class BiletView extends VerticalLayout implements I_BiletView {
         this.add(layout);
     }
 
+    //event handling
     private void saveBilet(ClickEvent clickEvent){
         biletPresenter.saveBilet();
     }
@@ -163,6 +164,7 @@ public class BiletView extends VerticalLayout implements I_BiletView {
         biletPresenter.salvareListaBilete();
     }
 
+    //interface methods
     @Override
     public Long getSelectedBiletId() {
         Optional<BiletDTO> biletDTO = bileteGrid.getSelectedItems().stream().findFirst();

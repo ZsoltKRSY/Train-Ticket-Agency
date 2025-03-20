@@ -94,6 +94,7 @@ public class OrarGaraView extends VerticalLayout implements I_OrarGaraView, HasU
         this.add(layout);
     }
 
+    //event handling
     private void saveOrarGara(ClickEvent clickEvent){
         orarGaraPresenter.saveOrarGara();
     }
@@ -107,16 +108,12 @@ public class OrarGaraView extends VerticalLayout implements I_OrarGaraView, HasU
     }
 
 
+    //interface methods
     @Override
     public void setParameter(BeforeEvent beforeEvent, String nrTren) {
-        if(nrTren == null){
-            this.setMessage("Error!", "There was an error getting the Number of the selected train!");
-        }
-        else{
-            this.nrTren = nrTren;
-            orarGaraPresenter.setI_orarGaraView_and_init_gridView_and_select(this, nrTren);
-            initGUI();
-        }
+        this.nrTren = nrTren;
+        orarGaraPresenter.setI_orarGaraView_and_init_gridView_and_select(this, nrTren);
+        initGUI();
     }
 
     @Override

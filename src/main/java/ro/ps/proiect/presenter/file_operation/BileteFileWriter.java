@@ -40,13 +40,13 @@ public class BileteFileWriter {
                 XWPFTableRow header = table.getRow(0);
                 header.getCell(0).setText("ID");
                 header.addNewTableCell().setText("Travel Date");
-                header.addNewTableCell().setText("Departure st.");
-                header.addNewTableCell().setText("Destination st.");
-                header.addNewTableCell().setText("Departure t.");
-                header.addNewTableCell().setText("Arrival t.");
-                header.addNewTableCell().setText("Train No.");
-                header.addNewTableCell().setText("Wagon No.");
-                header.addNewTableCell().setText("Seat No.");
+                header.addNewTableCell().setText("Departure station");
+                header.addNewTableCell().setText("Destination station");
+                header.addNewTableCell().setText("Departure time");
+                header.addNewTableCell().setText("Arrival time");
+                header.addNewTableCell().setText("Train Number");
+                header.addNewTableCell().setText("Wagon Number");
+                header.addNewTableCell().setText("Seat Number");
 
                 DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
                 DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
